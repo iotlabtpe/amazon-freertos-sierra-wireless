@@ -48,16 +48,16 @@
 /* Default configuration for all demos. Individual demos can override these below */
 #define democonfigDEMO_STACKSIZE    ( configMINIMAL_STACK_SIZE * 8 )
 #define democonfigDEMO_PRIORITY     ( tskIDLE_PRIORITY + 5 )
-#define democonfigNETWORK_TYPES     ( AWSIOT_NETWORK_TYPE_CELLULAR )
+#define democonfigNETWORK_TYPES     ( AWSIOT_NETWORK_TYPE_ETH )
 
 #if defined( CONFIG_MQTT_DEMO_ENABLED )
     #undef democonfigNETWORK_TYPES
-    #define democonfigNETWORK_TYPES    ( AWSIOT_NETWORK_TYPE_CELLULAR )
+    #define democonfigNETWORK_TYPES    ( AWSIOT_NETWORK_TYPE_ETH )
 #endif
 
 #if defined( CONFIG_OTA_UPDATE_DEMO_ENABLED )
     #undef democonfigNETWORK_TYPES
-    #define democonfigNETWORK_TYPES                       ( AWSIOT_NETWORK_TYPE_CELLULAR )
+    #define democonfigNETWORK_TYPES                       ( AWSIOT_NETWORK_TYPE_ETH )
 #endif
 
 #define democonfigGREENGRASS_DISCOVERY_TASK_STACK_SIZE    ( configMINIMAL_STACK_SIZE * 12 )

@@ -1,9 +1,6 @@
 # This port uses cellular HAL common
 include("${AFR_VENDORS_DIR}/aws/modules/3gpp/CMakeLists.txt")
 
-# This include cellular API definition
-include("${AFR_VENDORS_DIR}/aws/modules/cellular/CMakeLists.txt")
-
 # Cellular common
 afr_module(NAME cellular_module_port PUBLIC)
 

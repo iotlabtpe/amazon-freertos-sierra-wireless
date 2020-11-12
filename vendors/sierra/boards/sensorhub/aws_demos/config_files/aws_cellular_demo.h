@@ -1,5 +1,5 @@
 /*
-* FreeRTOS
+ * Amazon FreeRTOS CELLULAR Preview Release
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,35 +23,29 @@
  * http://www.FreeRTOS.org
  */
 
+#ifndef __AWS_CELLULAR_DEMO__H__
+#define __AWS_CELLULAR_DEMO__H__
 
-/**
- * @file aws_iot_network_config.h
- * @brief Configuration file which enables different network types.
+/*
+ * @brief Access Point Name (APN) for your cellular network.
+ * @todo set the corresponding APN according to your network provider.
  */
-#ifndef AWS_IOT_NETWORK_CONFIG_H_
-#define AWS_IOT_NETWORK_CONFIG_H_
+#define configCELLULAR_APN                   ""
 
-/**
- * @brief Configuration flag used to specify all supported network types by the board.
- *
- * The configuration is fixed per board and should never be changed.
- * More than one network interfaces can be enabled by using 'OR' operation with flags for
- * each network types supported. Flags for all supported network types can be found
- * in "aws_iot_network.h"
+/*
+ * @brief PDN context id for cellular network.
  */
+#define configCELLULAR_PDN_CONTEXT_ID        ( CELLULAR_PDN_CONTEXT_ID_MIN )
 
-#define configSUPPORTED_NETWORKS    ( AWSIOT_NETWORK_TYPE_ETH )
-
-/**
- * @brief Configuration flag which is used to enable one or more network interfaces for a board.
- *
- * The configuration can be changed any time to keep one or more network enabled or disabled.
- * More than one network interfaces can be enabled by using 'OR' operation with flags for
- * each network types supported. Flags for all supported network types can be found
- * in "aws_iot_network.h"
- *
+/*
+ * @brief PDN connect timeout.
  */
+#define confgCELLULAR_PDN_CONNECT_TIMEOUT    ( 100000UL )
 
-#define configENABLED_NETWORKS      ( AWSIOT_NETWORK_TYPE_ETH )
+/*
+ * @brief DNS server address for cellular network socket service.
+ * @todo Set the preferred DNS server address.
+ */
+#define configCELLULAR_DNS_SERVER            "8.8.8.8"
 
-#endif /* CONFIG_FILES_AWS_IOT_NETWORK_CONFIG_H_ */
+#endif /* ifndef __AWS_CELLULAR_DEMO__H__ */

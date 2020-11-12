@@ -100,6 +100,8 @@ static void prvMiscInitialization( void );
 
 /*-----------------------------------------------------------*/
 
+extern bool setupCellular( void );
+
 /**
  * @brief Application runtime entry point.
  */
@@ -109,6 +111,9 @@ int app_main( void )
      * running.  */
 
     prvMiscInitialization();
+
+    /* Connect to the cellular network before running the demos. */
+    setupCellular();
 
     if( SYSTEM_Init() == pdPASS )
     {

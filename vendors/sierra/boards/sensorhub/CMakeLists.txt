@@ -12,13 +12,11 @@ else()
 endif()
 
 if(SECURE_SOCKETS_CELLULAR)
-    # This include secure sockets for cellular
-    include("${AFR_VENDORS_DIR}/aws/modules/secure_sockets/CMakeLists.txt")
     set(freertos_plus_tcp_secure_socket_define FREERTOS_PLUS_TCP_NO_SECURE_SOCKETS)
 endif()
 
 if(BOARD_HAS_CELLULAR)
-    set(board_has_cellular_define BOARD_HAS_CELLULAR)
+    set(board_has_cellular_define -DBOARD_HAS_CELLULAR=1)
 endif()
 
 # -------------------------------------------------------------------------------------------------
@@ -69,6 +67,7 @@ target_compile_options(
     ${IDF_COMPILE_OPTIONS}
     $<$<COMPILE_LANGUAGE:C>:${IDF_C_COMPILE_OPTIONS}>
     $<$<COMPILE_LANGUAGE:CXX>:${IDF_CXX_COMPILE_OPTIONS}>
+    ${board_has_cellular_define}
 )
 
 # Compiler definitions/macros
@@ -93,12 +92,18 @@ target_link_options(
 )
 
 if(BOARD_HAS_CELLULAR)
+# This include secure sockets for cellular
+include("${AFR_VENDORS_DIR}/aws/modules/secure_sockets/CMakeLists.txt")
+
 # Cellular
 afr_mcu_port(cellular)
 target_sources(
     AFR::cellular::mcu_port
     INTERFACE "${afr_ports_dir}/comm_if/comm_if_sierra.c"
 )
+
+# This include cellular API definition
+include("${AFR_VENDORS_DIR}/aws/modules/cellular/CMakeLists.txt")
 
 # Cellular module port
 include("${AFR_VENDORS_DIR}/sierra/modules/hl7802/CMakeLists.txt")
@@ -403,7 +408,7 @@ if(AFR_ENABLE_DEMOS OR AFR_ENABLE_TESTS)
     add_executable(
         ${exe_target}
         "${board_dir}/application_code/main.c"
-        "$<IF:${AFR_IS_TESTING},${board_dir}/application_code/cellular_setup.c,>"
+        "${board_dir}/application_code/cellular_setup.c"
         ${extra_exe_sources}
     )
     target_include_directories(
@@ -418,6 +423,7 @@ if(AFR_ENABLE_DEMOS OR AFR_ENABLE_TESTS)
             AFR::wifi
             AFR::utils
             AFR::ble
+            AFR::cellular
     )
 endif()
 if(AFR_METADATA_MODE)

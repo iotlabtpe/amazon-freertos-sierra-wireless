@@ -34,23 +34,21 @@
 
 #include <stdbool.h>
 
-/* Test runner includes. */
-#include "aws_test_runner.h"
-
 /* AWS System application includes. */
 // #include "FreeRTOS_IP.h"
 // #include "FreeRTOS_Sockets.h"
 // #include "FreeRTOS_DHCP.h"
 // #include "aws_demo_logging.h"
+#include "FreeRTOSIPConfig.h"
 #include "iot_system_init.h"
 
 #if defined( BOARD_HAS_CELLULAR )
     #include "aws_cellular_config.h"
+    #include "aws_cellular_demo.h"
     #include "cellular_config_defaults.h"
     #include "cellular_types.h"
     #include "cellular_api.h"
     #include "cellular_comm_interface.h"
-    #include "aws_test_cellular.h"
 
     /* Secure socket needs application provide the cellular handle and pdn context id. */
     /* User of secure sockets cellular should provide this variable. */
@@ -58,7 +56,7 @@
     CellularHandle_t CellularHandle = NULL;
     /* User of secure sockets cellular should provide this variable. */
     /* coverity[misra_c_2012_rule_8_6_violation] */
-    uint8_t CellularSocketPdnContextId = testCELLULAR_PDN_CONTEXT_ID;
+    uint8_t CellularSocketPdnContextId = configCELLULAR_PDN_CONTEXT_ID;
 
     #define CELLULAR_SIM_CARD_WAIT_INTERVAL_MS    ( 500UL )
     #define CELLULAR_SIM_CARD_WAIT_TIMEOUT_MS     ( 60000UL )
@@ -78,7 +76,7 @@
         CellularServiceStatus_t serviceStatus = { 0 };
         CellularCommInterface_t * pCommIntf = &CellularCommInterface;
         uint8_t tries = 0;
-        CellularPdnConfig_t pdnConfig = { CELLULAR_PDN_CONTEXT_IPV4, CELLULAR_PDN_AUTH_NONE, testCELLULAR_APN, "", "" };
+        CellularPdnConfig_t pdnConfig = { CELLULAR_PDN_CONTEXT_IPV4, CELLULAR_PDN_AUTH_NONE, configCELLULAR_APN, "", "" };
         CellularPdnStatus_t PdnStatusBuffers = { 0 };
         char localIP[ CELLULAR_IP_ADDRESS_MAX_SIZE ] = { '\0' };
         uint32_t timeoutCountLimit = ( CELLULAR_SIM_CARD_WAIT_TIMEOUT_MS / CELLULAR_SIM_CARD_WAIT_INTERVAL_MS ) + 1U;
@@ -116,7 +114,7 @@
         /* Setup the PDN config. */
         if( cellularStatus == CELLULAR_SUCCESS )
         {
-            cellularStatus = Cellular_SetPdnConfig( CellularHandle, testCELLULAR_PDN_CONTEXT_ID, &pdnConfig );
+            cellularStatus = Cellular_SetPdnConfig( CellularHandle, configCELLULAR_PDN_CONTEXT_ID, &pdnConfig );
         }
         else
         {
@@ -183,7 +181,7 @@
 
         if( cellularStatus == CELLULAR_SUCCESS )
         {
-            cellularStatus = Cellular_SetDns( CellularHandle, CellularSocketPdnContextId, testCELLULAR_DNS_SERVER_ADDRESS );
+            cellularStatus = Cellular_SetDns( CellularHandle, CellularSocketPdnContextId, configCELLULAR_DNS_SERVER );
         }
 
         if( ( cellularStatus == CELLULAR_SUCCESS ) && ( PdnStatusBuffers.state == 1 ) )
