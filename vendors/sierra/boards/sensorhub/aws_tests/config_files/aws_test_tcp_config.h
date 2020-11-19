@@ -53,18 +53,18 @@
  *  @brief Indicates how long  receive needs to wait for data before Timeout happens.
  *
  */
-#define         integrationtestportableRECEIVE_TIMEOUT             10000
+#define         integrationtestportableRECEIVE_TIMEOUT             20000
 
 /**
  * @brief Indicates how long  send needs to wait before Timeout happens.
  *
  */
-#define         integrationtestportableSEND_TIMEOUT                10000
+#define         integrationtestportableSEND_TIMEOUT                20000
 
 /**
  * @brief The timeout for all TCP echo multi-task tests.
  */
-#define         tcptestECHO_TEST_SYNC_TIMEOUT                      80000
+#define         tcptestECHO_TEST_SYNC_TIMEOUT                      240000
 
 /**
  * @brief The stack size of the tasks created in all TCP echo multi-task tests.
@@ -75,6 +75,11 @@
  * @brief The priority of the tasks created in all TCP echo multi-task tests.
  */
 #define         tcptestTCP_ECHO_TASKS_PRIORITY                     ( tskIDLE_PRIORITY + 5 )
+
+
+#define         tcptestECHO_TEST_RXTX_TIMEOUT                       ( 720000 )
+
+#define         ipconfigTCP_MSS                                     ( 128 )
 
 
 #endif /*AWS_INTEGRATION_TEST_TCP_CONFIG_H */
