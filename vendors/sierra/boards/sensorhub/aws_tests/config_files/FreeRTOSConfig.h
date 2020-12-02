@@ -283,7 +283,7 @@
 #define configPROFILING                      ( 0 )
 
 /* The platform FreeRTOS is running on. */
-#define configPLATFORM_NAME    "EspressifESP32"
+#define configPLATFORM_NAME    "SierraSensorHub"
 
 #ifndef __ASSEMBLER__
 /*-----------------------------------------------------------
